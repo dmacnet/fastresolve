@@ -69,7 +69,11 @@ DatedStringDb::DatedStringDb(const char *dbhome, const char *storename)
   env->set_cachesize(0, MPOOL_SIZE, 0);
   env->open(dbhome, DB_CREATE|DB_INIT_MPOOL|DB_PRIVATE, 0644);
   db = new Db(env, 0);
-  db->open(storename, NULL, DB_BTREE, DB_CREATE, 0644);
+  db->open(
+#if DB_VERSION_MAJOR >= 5
+	   NULL,
+#endif
+	   storename, NULL, DB_BTREE, DB_CREATE, 0644);
 #elif DB_VERSION_MAJOR == 2
   env = new DbEnv;
   env->set_error_stream(&cerr);

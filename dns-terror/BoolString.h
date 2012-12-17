@@ -36,11 +36,11 @@
 class BoolString
 {
 private:
-  char *str;
+  const char *str;
   bool flag;
 public:
   BoolString(void) { str=0; flag=false; }
-  BoolString(char *astr, bool aflag) {
+  BoolString(const char *astr, bool aflag) {
     str = astr;
     flag = aflag;
   }
@@ -48,8 +48,8 @@ public:
     str = other.str;
     flag = other.flag;
   }
-  void set_str(char *astr) { str = astr; }
-  char *get_str(void) { return str; }
+  void set_str(const char *astr) { str = astr; }
+  const char *get_str(void) { return str; }
   void set_flag(bool aflag) { flag = aflag; }
   bool get_flag(void) { return flag; }
 

@@ -1,15 +1,16 @@
 AC_INIT
-AM_INIT_AUTOMAKE([fastresolve], [2.10])
+AM_INIT_AUTOMAKE([fastresolve], [2.10.1])
 AC_ARG_PROGRAM
 AC_PATH_PROGS(PERL, [perl5 perl], [/usr/bin/perl])
 AC_PROG_CC
 AC_PROG_CXX
+AC_HEADER_STDC
 AC_CHECK_FUNCS(fgetln)
 
 # The following macro is
 #    Copyright (C) 1997-1999 Ian Jackson <ian@davenant.greenend.org.uk>
 # distributed under the GNU GPL (v2+).
-AC_DEFUN(ADNS_C_GETFUNC,[
+AC_DEFUN([ADNS_C_GETFUNC],[
  AC_CHECK_FUNC([$1],,[
   AC_CHECK_LIB([$2],[$1],[$3],[
     AC_MSG_ERROR([cannot find library function $1])
@@ -23,7 +24,7 @@ ADNS_C_GETFUNC(inet_aton,resolv,[LIBS="-lresolv $LIBS"])
 AC_CHECK_LIB(z, gzprintf, , AC_MSG_ERROR([zlib including gzprintf is required]))
 AC_CHECK_LIB(adns, adns_submit, , AC_MSG_ERROR([adns library is required]))
 
-AC_DEFUN(DJM_LIB_DB_CXX,
+AC_DEFUN([DJM_LIB_DB_CXX],
 [dnl Check for a C++ interface, either version.
 
 dnl Berkeley DB 2.x.
@@ -41,19 +42,19 @@ if test $djm_cv_lib_db_Dbopen = yes; then
 	LIBS="$LIBS -ldb"
 else
 
-dnl Berkeley DB 3.x installed as libdb.
-AC_CACHE_CHECK([for Db::open in -ldb_cxx], djm_cv_lib_db_cxx_Dbopen,
+dnl Berkeley DB 3.x-4.x installed as libdb and libdb_cxx.
+AC_CACHE_CHECK([for Db::open 3.x-4.x in -ldb_cxx], djm_cv_lib_db_cxx_Dbopen_34,
 [AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
 djm_save_LIBS="$LIBS"
 LIBS="$LIBS -ldb -ldb_cxx"
 AC_TRY_LINK([#include <db_cxx.h>], [Db *d = new Db(NULL, 0);
 d->open(NULL, NULL, DB_BTREE, DB_CREATE, 0);],
-	djm_cv_lib_db_cxx_Dbopen=yes, djm_cv_lib_db_cxx_Dbopen=no)
+	djm_cv_lib_db_cxx_Dbopen_34=yes, djm_cv_lib_db_cxx_Dbopen_34=no)
 LIBS="$djm_save_LIBS"
 AC_LANG_RESTORE])
 
-if test $djm_cv_lib_db_cxx_Dbopen = yes; then
+if test $djm_cv_lib_db_cxx_Dbopen_34 = yes; then
 	LIBS="$LIBS -ldb -ldb_cxx"
 else
 
@@ -88,7 +89,43 @@ AC_LANG_RESTORE])
 if test $djm_cv_lib_db4_cxx_Dbopen = yes; then
 	LIBS="$LIBS -ldb4 -ldb4_cxx"
 else
-	AC_MSG_ERROR([Berkeley DB library 2.x-4.x configured with --enable-cxx is required])
+
+dnl Berkeley DB 5.x installed as libdb.
+AC_CACHE_CHECK([for Db::open 5.x in -ldb_cxx], djm_cv_lib_db_cxx_Dbopen_5,
+[AC_LANG_SAVE
+AC_LANG_CPLUSPLUS
+djm_save_LIBS="$LIBS"
+LIBS="$LIBS -ldb -ldb_cxx"
+AC_TRY_LINK([#include <db_cxx.h>], [Db *d = new Db(NULL, 0);
+d->open(NULL, NULL, NULL, DB_BTREE, DB_CREATE, 0);],
+	djm_cv_lib_db_cxx_Dbopen_5=yes, djm_cv_lib_db_cxx_Dbopen_5=no)
+LIBS="$djm_save_LIBS"
+AC_LANG_RESTORE])
+
+if test $djm_cv_lib_db_cxx_Dbopen_5 = yes; then
+	LIBS="$LIBS -ldb -ldb_cxx"
+else
+
+dnl Berkeley DB 5.x installed as libdb5.
+AC_CACHE_CHECK([for Db::open in -ldb5_cxx], djm_cv_lib_db5_cxx_Dbopen,
+[AC_LANG_SAVE
+AC_LANG_CPLUSPLUS
+djm_save_LIBS="$LIBS"
+LIBS="$LIBS -ldb5 -ldb5_cxx"
+AC_TRY_LINK([#include <db_cxx.h>], [Db *d = new Db(NULL, 0);
+d->open(NULL, NULL, NULL, DB_BTREE, DB_CREATE, 0);],
+	djm_cv_lib_db5_cxx_Dbopen=yes, djm_cv_lib_db5_cxx_Dbopen=no)
+LIBS="$djm_save_LIBS"
+AC_LANG_RESTORE])
+
+if test $djm_cv_lib_db5_cxx_Dbopen = yes; then
+	LIBS="$LIBS -ldb5 -ldb5_cxx"
+else
+
+
+	AC_MSG_ERROR([Berkeley DB library 2.x-5.x configured with --enable-cxx is required])
+fi
+fi
 fi
 fi
 fi

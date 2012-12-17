@@ -1,0 +1,12 @@
+2012-05-17  David MacKenzie  <djm@djmnet.org>
+
+	* configure.in: Check for STDC headers, used by getline.c.
+	Quote names of macro definitions as required by newer automake/aclocal.
+	Add checks for Berkeley DB 5.x.
+	* getdominfo.in, make-report.in: Support datarootdir added in newer Autoconf.
+	* BoolString.h: Add const to stop gcc 4 warnings.
+	* DatedStringdB.cc: Support Berkeley DB 5.x, with extra transaction parameter to Db::open.
+	* dns-terror.cc (submit_query, process_answer, main): Add const to stop gcc 4 warnings.
+	Remove enum from adns_queryflags cast; seems to have been incorrect.
+
+

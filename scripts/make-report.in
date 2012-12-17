@@ -37,11 +37,12 @@ sub usage
 
 sub main
 {
-    my($prefix, $exec_prefix, $cfg, $report, $logfile, $templog, $newlog,
+    my($prefix, $exec_prefix, $datarootdir, $cfg, $report, $logfile, $templog, $newlog,
        $v, @logs);
 
     $prefix="@prefix@";
     $exec_prefix="@exec_prefix@";
+    $datarootdir="@datarootdir@";
     $ENV{PATH}="@bindir@:$ENV{PATH}";
 
     getopts("c:o:") || usage();

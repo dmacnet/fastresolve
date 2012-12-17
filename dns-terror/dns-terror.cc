@@ -33,8 +33,8 @@
  * On SIGTERM, closes the db file and exits.
  *
  * Written by David MacKenzie <djm@djmnet.org>
- * Thanks to Josh Osborne <stripes@pix.net> for ideas and an
- * earlier implementation.
+ * Thanks to Josh Osborne <stripes@pix.net> and <stripes@mac.com>
+ * for ideas and an earlier implementation.
  * Please send comments and bug reports to <fastresolve-bugs@djmnet.org>
  *
  ******************************************************************************
@@ -301,7 +301,8 @@ submit_query(adns_state ads, BoolStringMap &reslist, LogEntry *lp)
 {
   int r;
   adns_query qu;
-  char rev[MAX_PTR_SIZE], *ipaddr, *data;
+  char rev[MAX_PTR_SIZE], *ipaddr;
+  const char *data;
 
   if (!domptr(lp->ipaddr, rev)) {
     if (verbose)
@@ -331,7 +332,7 @@ submit_query(adns_state ads, BoolStringMap &reslist, LogEntry *lp)
   }
   
   r = adns_submit(ads, rev, adns_r_ptr_raw,
-		  (enum adns_queryflags)
+		  (adns_queryflags)
 		  (adns_qf_quoteok_cname|adns_qf_quoteok_anshost), lp, &qu);
   if (r)
     fatal_errno("adns_submit", r);
@@ -352,11 +353,11 @@ submit_query(adns_state ads, BoolStringMap &reslist, LogEntry *lp)
 
 // Record the resource record(s) we got back.
 // Do not free the return value, which is used in reslist.
-char *
+const char *
 process_answer(adns_answer *ans, char *ipaddr, BoolStringMap &reslist)
 {
   const char *rrtn, *fmtn;
-  char *ptr;
+  const char *ptr;
   int len;
   adns_status ri;
 
@@ -386,7 +387,7 @@ process_answer(adns_answer *ans, char *ipaddr, BoolStringMap &reslist)
   assert(it != reslist.end());
   key = (*it).first;		// Don't lose that malloc'd string.
   oldvalue = (*it).second;
-  char *data = oldvalue.get_str();
+  const char *data = oldvalue.get_str();
   assert(data[0] == '?' && data[1] == '\0');
   assert(oldvalue.get_flag());
 
@@ -579,7 +580,7 @@ main(int argc, char *const *argv)
   BoolStringMap reslist;
   LogEntryQue lq;
   char *dbhome = NULL;
-  char *dbfile = DEFAULT_DBFILE;
+  const char *dbfile = DEFAULT_DBFILE;
   char *adnsconf = NULL;
   long marksize = 0, lastmark = -1;
   bool syncmark = false;
@@ -589,7 +590,7 @@ main(int argc, char *const *argv)
   int parallel_queries = DEFAULT_PARALLEL_QUERIES;
   QueryStats stats;
   LogEntry *lp;
-  char *dom;
+  const char *dom;
 
   program_name = argv[0];
 

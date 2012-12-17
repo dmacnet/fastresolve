@@ -52,7 +52,7 @@
 # 02111-1307, USA.
 ##############################################################################
 
-BEGIN { $prefix="@prefix@"; }
+BEGIN { $prefix="@prefix@"; $datarootdir="@datarootdir@"; }
 use lib "@datadir@/fastresolve";
 use Getopt::Std;
 use BerkeleyDB;
