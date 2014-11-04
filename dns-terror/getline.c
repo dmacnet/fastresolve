@@ -40,7 +40,7 @@ getline (lineptr, n, stream)
 }
 
 
-#else /* ! have getdelim */
+#endif /* dns-terror uses getstr but not getdelim or getline */
 
 # define NDEBUG
 # include <assert.h>
@@ -134,6 +134,7 @@ getstr (lineptr, n, stream, terminator, offset)
   return ret;
 }
 
+#if 0 /* dns-terror doesn't use these */
 int
 getline (lineptr, n, stream)
      char **lineptr;
