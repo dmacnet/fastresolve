@@ -1,10 +1,7 @@
 dns-terror/dns-terror.1
 scripts/btree-dump.1
-scripts/convert-dom-db.1
 scripts/convert-ip-db.1
 scripts/expire-ip-db.1
-scripts/getdominfo.1
-scripts/rebuild-dom-db.1
 scripts/rebuild-ip-db.1
 scripts/reresolve.1
 scripts/make-report.1
