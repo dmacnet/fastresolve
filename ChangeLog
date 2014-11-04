@@ -1,4 +1,14 @@
-2012-05-17  David MacKenzie  <djm@djmnet.org>
+2014-11-04  David MacKenzie  <dmac@dbmacnet.com>
+
+	* dns-terror.cc: Workarounds for compiler warnings.
+	* getline.c: #if out reimplementations of unneeded library
+	functions.
+	* scripts/Makefile.am: Install Analog config file under /etc so it
+	can be modified.
+	* fastresolve.spec: Add spec file for .rpm packages.
+	* debian: Add directory for .deb packages.
+
+2012-05-17  David MacKenzie  <dmac@dbmacnet.com>
 
 	* configure.in: Check for STDC headers, used by getline.c.
 	Quote names of macro definitions as required by newer automake/aclocal.

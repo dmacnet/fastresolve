@@ -1,3 +1,9 @@
+Changes in release 2.11:
+
+* Support Berkeley DB 5.x.
+* Fixed warnings from recent compilers.
+* Support for building .rpm and .deb packages.
+
 Changes in release 2.10:
 
 * Support gcc 3.2 requirement for "using namespace std;" to use STL.
