@@ -7,7 +7,7 @@
 	can be modified.
 	* fastresolve.spec: Add spec file for .rpm packages.
 	* debian: Add directory for .deb packages.
-	* Makefile.am: Add spec and debian files.
+	* Makefile.am: Add spec and debian files to distributed tar file.
 
 2012-05-17  David MacKenzie  <dmac@dbmacnet.com>
 
