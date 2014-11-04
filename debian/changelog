@@ -1,0 +1,5 @@
+fastresolve (2.10.1) unstable; urgency=low
+
+  * Initial Release for Debian.
+
+ -- David MacKenzie <dmac@dbmacnet.com>  Fri, 31 Oct 2014 20:16:40 +0000

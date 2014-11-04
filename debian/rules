@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# Not sure if this is needed or desirable.
+# See http://debathena.mit.edu/packaging/
+#include /usr/share/cdbs/1/class/autotools.mk
+
+%:
+	dh $@  --with autotools-dev
