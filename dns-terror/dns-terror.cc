@@ -430,10 +430,12 @@ read_ipaddr(FILE *fp, bool save_line, int skip_fields)
   static char ipa[MAX_IP_LEN + 1];
   char *before;
   size_t after_len = 0, before_len = 0;
-  char *p = ipa, *after = "", *to, *from, *end;
+  char empty[1]; // Hack for -Wwrite-strings.
+  char *p = ipa, *after = empty, *to, *from, *end;
   int c;
   LogEntry *lp;
 
+  empty[0] = '\0';
   if (skip_fields)
     before = read_fields(fp, skip_fields, &before_len);
 
@@ -704,7 +706,7 @@ main(int argc, char *const *argv)
     ++stats.linesread;
     if (marksize && stats.linesread % marksize == 0) {
       if (copylines)
-	fprintf(stderr, "On line %ld, %d queries outstanding, %d lines buffered\n",
+	fprintf(stderr, "On line %ld, %d queries outstanding, %lu lines buffered\n",
 		stats.linesread, outstanding, lq.size());
       else
 	fprintf(stderr, "On line %ld, %d queries outstanding\n",
