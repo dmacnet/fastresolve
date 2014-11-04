@@ -9,6 +9,12 @@ URL:		https://github.com/dmacnet/fastresolve
 Vendor:		UUNET
 Packager:	fastresolve-bugs@djmnet.org
 BuildRoot:	%{_tmppath}/%{name}-root
+# There doesn't appear to be a version-independent db-devel virtual
+# package, so we have to pick a particular version. Change the below
+# line if you want to build against a different version.
+BuildRequires:	adns-devel zlib-devel db4-devel
+Requires:	perl-BerkeleyDB
+
 # Use an installation of Berkeley DB with C++ support,
 # separate from glibc to avoid conflicts with it.
 # Both DB 2.x and 3.x work.
@@ -17,8 +23,8 @@ BuildRoot:	%{_tmppath}/%{name}-root
 
 %description
 Fastresolve is a package of programs which process Web log files to
-get DNS and domain ownership information for log analysis. It sends
-many queries in parallel, and caches results, for speed.
+get DNS information for log analysis. It sends many queries in
+parallel, and caches results, for speed.
 
 %prep
 %setup
@@ -45,20 +51,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/dns-terror
 %{_mandir}/man1/dns-terror.1*
 %{_bindir}/btree-dump
-%{_bindir}/convert-dom-db
 %{_bindir}/convert-ip-db
 %{_bindir}/expire-ip-db
-%{_bindir}/getdominfo
-%{_bindir}/rebuild-dom-db
 %{_bindir}/rebuild-ip-db
 %{_bindir}/reresolve
 %{_bindir}/make-report
 %{_mandir}/man1/btree-dump.1*
-%{_mandir}/man1/convert-dom-db.1*
 %{_mandir}/man1/convert-ip-db.1*
 %{_mandir}/man1/expire-ip-db.1*
-%{_mandir}/man1/getdominfo.1*
-%{_mandir}/man1/rebuild-dom-db.1*
 %{_mandir}/man1/rebuild-ip-db.1*
 %{_mandir}/man1/reresolve.1*
 %{_mandir}/man1/make-report.1*

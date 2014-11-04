@@ -2,7 +2,9 @@ Source: fastresolve
 Section: contrib/net
 Priority: optional
 Maintainer: David MacKenzie <dmac@dbmacnet.com>
-# There doesn't appear to be a version-independent libdb++-dev virtual package, so we have to pick a particular version.
+# There doesn't appear to be a version-independent libdb++-dev virtual
+# package, so we have to pick a particular version. Change the below
+# line if you want to build against a different version.
 Build-Depends: debhelper (>= 9.0.0), autotools-dev, libadns1-dev, zlib1g-dev, libdb5.3++-dev
 Standards-Version: 3.9.4
 Homepage: https://github.com/dmacnet/fastresolve
@@ -11,8 +13,8 @@ Homepage: https://github.com/dmacnet/fastresolve
 
 Package: fastresolve
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, perl
+Depends: ${shlibs:Depends}, ${misc:Depends}, perl, perl-BerkeleyDB
 Description: Fast DNS resolver for log files
  Fastresolve is a package of programs to process web log files to get
- DNS and domain ownership information for log analysis. It sends out
- many queries in parallel, and caches results, for speed.
+ DNS information for log analysis. It sends out many queries in
+ parallel, and caches results, for speed.
