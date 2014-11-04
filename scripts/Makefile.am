@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_SCRIPTS = btree-dump convert-dom-db convert-ip-db expire-ip-db getdominfo rebuild-dom-db rebuild-ip-db reresolve make-report
-man_MANS = btree-dump.1 convert-dom-db.1 convert-ip-db.1 expire-ip-db.1 getdominfo.1 rebuild-dom-db.1 rebuild-ip-db.1 reresolve.1 make-report.1
+bin_SCRIPTS = btree-dump   convert-ip-db   expire-ip-db   rebuild-ip-db   reresolve   make-report
+man_MANS =    btree-dump.1 convert-ip-db.1 expire-ip-db.1 rebuild-ip-db.1 reresolve.1 make-report.1
 frdatadir = $(datadir)/fastresolve
 frsysconfdir = $(sysconfdir)/fastresolve
 frdata_DATA = analog.cfg
