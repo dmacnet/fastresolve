@@ -48,7 +48,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc NEWS README doc/TODO doc/timings
 %config /%{_sysconfdir}/fastresolve/analog.cfg
-%{_datadir}/fastresolve/AddrCycle.pm
 %{_bindir}/dns-terror
 %{_mandir}/man1/dns-terror.1*
 %{_bindir}/btree-dump
