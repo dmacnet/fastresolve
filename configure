@@ -5940,7 +5940,7 @@ fi
 fi
 fi
 
-ac_config_files="$ac_config_files Makefile dns-terror/Makefile modules/Makefile scripts/Makefile scripts/btree-dump scripts/convert-ip-db scripts/expire-ip-db scripts/rebuild-ip-db scripts/reresolve scripts/make-report"
+ac_config_files="$ac_config_files Makefile dns-terror/Makefile scripts/Makefile scripts/btree-dump scripts/convert-ip-db scripts/expire-ip-db scripts/rebuild-ip-db scripts/reresolve scripts/make-report"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -6594,7 +6594,6 @@ do
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "dns-terror/Makefile") CONFIG_FILES="$CONFIG_FILES dns-terror/Makefile" ;;
-    "modules/Makefile") CONFIG_FILES="$CONFIG_FILES modules/Makefile" ;;
     "scripts/Makefile") CONFIG_FILES="$CONFIG_FILES scripts/Makefile" ;;
     "scripts/btree-dump") CONFIG_FILES="$CONFIG_FILES scripts/btree-dump" ;;
     "scripts/convert-ip-db") CONFIG_FILES="$CONFIG_FILES scripts/convert-ip-db" ;;

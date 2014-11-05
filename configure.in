@@ -176,6 +176,6 @@ fi])
 
 DJM_LIB_DB_CXX
 
-AC_OUTPUT(Makefile dns-terror/Makefile modules/Makefile scripts/Makefile
+AC_OUTPUT(Makefile dns-terror/Makefile scripts/Makefile
           scripts/btree-dump scripts/convert-ip-db scripts/expire-ip-db
           scripts/rebuild-ip-db scripts/reresolve scripts/make-report)
