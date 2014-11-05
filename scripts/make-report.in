@@ -48,7 +48,7 @@ sub main
     getopts("c:o:") || usage();
     @ARGV || usage();
 
-    $cfg = $opt_c || "@datadir@/fastresolve/analog.cfg";
+    $cfg = $opt_c || "@sysconfdir@/fastresolve/analog.cfg";
     $report = $opt_o || "report.html";
     $v = "-m 100";
 
