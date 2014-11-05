@@ -2,9 +2,10 @@ Summary:	A fast logfile IP address resolver and related utilities.
 Name:		fastresolve
 Version:	2.10.1
 Release:	1
-Copyright:	GPL
+#Copyright:	GPL
+License:	GPL
 Group:		Utilities
-Source:		fastresolve-%{version}.tar.bz2
+Source:		fastresolve-%{version}.tar.gz
 URL:		https://github.com/dmacnet/fastresolve
 Vendor:		UUNET
 Packager:	fastresolve-bugs@djmnet.org
