@@ -1,9 +1,1 @@
-dns-terror/dns-terror /usr/bin
 dns-terror/adns-1.0-retries.patch /usr/share/fastresolve
-scripts/analog.cfg /etc/fastresolve
-scripts/btree-dump /usr/bin
-scripts/convert-ip-db /usr/bin
-scripts/expire-ip-db /usr/bin
-scripts/rebuild-ip-db /usr/bin
-scripts/reresolve /usr/bin
-scripts/make-report /usr/bin
