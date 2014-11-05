@@ -68,14 +68,14 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" \
-	"$(DESTDIR)$(frdatadir)"
+	"$(DESTDIR)$(frsysconfdir)"
 SCRIPTS = $(bin_SCRIPTS)
 SOURCES =
 DIST_SOURCES =
 man1dir = $(mandir)/man1
 NROFF = nroff
 MANS = $(man_MANS)
-DATA = $(frdata_DATA)
+DATA = $(frsysconf_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -169,10 +169,9 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 bin_SCRIPTS = btree-dump   convert-ip-db   expire-ip-db   rebuild-ip-db   reresolve   make-report
 man_MANS = btree-dump.1 convert-ip-db.1 expire-ip-db.1 rebuild-ip-db.1 reresolve.1 make-report.1
-frdatadir = $(datadir)/fastresolve
 frsysconfdir = $(sysconfdir)/fastresolve
-frdata_DATA = analog.cfg
-EXTRA_DIST = $(man_MANS) $(frdata_DATA) make-report.1.in
+frsysconf_DATA = analog.cfg
+EXTRA_DIST = $(man_MANS) $(frsysconf_DATA) make-report.1.in
 CLEANFILES = ${bin_SCRIPTS} make-report.1
 all: all-am
 
@@ -291,26 +290,26 @@ uninstall-man1:
 	test -z "$$files" || { \
 	  echo " ( cd '$(DESTDIR)$(man1dir)' && rm -f" $$files ")"; \
 	  cd "$(DESTDIR)$(man1dir)" && rm -f $$files; }
-install-frdataDATA: $(frdata_DATA)
+install-frsysconfDATA: $(frsysconf_DATA)
 	@$(NORMAL_INSTALL)
-	test -z "$(frdatadir)" || $(MKDIR_P) "$(DESTDIR)$(frdatadir)"
-	@list='$(frdata_DATA)'; test -n "$(frdatadir)" || list=; \
+	test -z "$(frsysconfdir)" || $(MKDIR_P) "$(DESTDIR)$(frsysconfdir)"
+	@list='$(frsysconf_DATA)'; test -n "$(frsysconfdir)" || list=; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  echo "$$d$$p"; \
 	done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(frdatadir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(frdatadir)" || exit $$?; \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(frsysconfdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(frsysconfdir)" || exit $$?; \
 	done
 
-uninstall-frdataDATA:
+uninstall-frsysconfDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(frdata_DATA)'; test -n "$(frdatadir)" || list=; \
+	@list='$(frsysconf_DATA)'; test -n "$(frsysconfdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	test -n "$$files" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(frdatadir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(frdatadir)" && rm -f $$files
+	echo " ( cd '$(DESTDIR)$(frsysconfdir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(frsysconfdir)" && rm -f $$files
 tags: TAGS
 TAGS:
 
@@ -365,7 +364,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(MANS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(frdatadir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(frsysconfdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -414,7 +413,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-frdataDATA install-man
+install-data-am: install-frsysconfDATA install-man
 
 install-dvi: install-dvi-am
 
@@ -458,7 +457,8 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binSCRIPTS uninstall-frdataDATA uninstall-man
+uninstall-am: uninstall-binSCRIPTS uninstall-frsysconfDATA \
+	uninstall-man
 
 uninstall-man: uninstall-man1
 
@@ -468,13 +468,13 @@ uninstall-man: uninstall-man1
 	distclean-generic distdir dvi dvi-am html html-am info info-am \
 	install install-am install-binSCRIPTS install-data \
 	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-frdataDATA install-html \
+	install-exec-am install-frsysconfDATA install-html \
 	install-html-am install-info install-info-am install-man \
 	install-man1 install-pdf install-pdf-am install-ps \
 	install-ps-am install-strip installcheck installcheck-am \
 	installdirs maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
-	uninstall-am uninstall-binSCRIPTS uninstall-frdataDATA \
+	uninstall-am uninstall-binSCRIPTS uninstall-frsysconfDATA \
 	uninstall-man uninstall-man1
 
 

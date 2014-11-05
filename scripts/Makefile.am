@@ -2,10 +2,9 @@
 
 bin_SCRIPTS = btree-dump   convert-ip-db   expire-ip-db   rebuild-ip-db   reresolve   make-report
 man_MANS =    btree-dump.1 convert-ip-db.1 expire-ip-db.1 rebuild-ip-db.1 reresolve.1 make-report.1
-frdatadir = $(datadir)/fastresolve
 frsysconfdir = $(sysconfdir)/fastresolve
-frdata_DATA = analog.cfg
-EXTRA_DIST = $(man_MANS) $(frdata_DATA) make-report.1.in
+frsysconf_DATA = analog.cfg
+EXTRA_DIST = $(man_MANS) $(frsysconf_DATA) make-report.1.in
 
 make-report.1: make-report.1.in FORCE
 	@PERL@ -pe "s,DATADIR,${frsysconfdir},g" ${srcdir}/make-report.1.in > $@
