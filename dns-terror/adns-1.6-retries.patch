@@ -1,0 +1,117 @@
+diff --git a/src/check.c b/src/check.c
+index f5e1a9e..2f52b06 100644
+--- a/src/check.c
++++ b/src/check.c
+@@ -115,7 +115,7 @@ static void checkc_queue_udpw(adns_state ads) {
+   
+   DLIST_CHECK(ads->udpw, qu, , {
+     assert(qu->state==query_tosend);
+-    assert(qu->retries <= UDPMAXRETRIES);
++    assert(qu->retries <= ads->udpmaxretries);
+     assert(qu->udpsent);
+     assert(!qu->children.head && !qu->children.tail);
+     checkc_query(ads,qu);
+diff --git a/src/internal.h b/src/internal.h
+index c03a77b..5fcb4bb 100644
+--- a/src/internal.h
++++ b/src/internal.h
+@@ -379,6 +379,8 @@ struct adns__state {
+   int nudpsockets;
+   vbuf tcpsend, tcprecv;
+   int nservers, nsortlist, nsearchlist, searchndots, tcpserver, tcprecv_skip;
++  /* Parameters added for fastresolve. */
++  int udpmaxretries, udpretryms, tcpms;
+   enum adns__tcpstate {
+     server_disconnected, server_connecting,
+     server_ok, server_broken
+diff --git a/src/setup.c b/src/setup.c
+index 3646968..172123f 100644
+--- a/src/setup.c
++++ b/src/setup.c
+@@ -298,6 +298,37 @@ static void ccf_options(adns_state ads, const char *fn,
+       ads->searchndots= v;
+       continue;
+     }
++
++    /* Start of parameters added for fastresolve. */
++    if (WORD_STARTS("udpmaxretries:")) {
++      v= strtoul(word,&ep,10);
++      if (ep==word || ep != endword || v > INT_MAX) {
++	configparseerr(ads,fn,lno,"option `%.*s' malformed or has bad value",l,opt);
++	continue;
++      }
++      ads->udpmaxretries= v;
++      continue;
++    }
++    if (WORD_STARTS("udpretryms:")) {
++      v= strtoul(word,&ep,10);
++      if (ep==word || ep != endword || v > INT_MAX) {
++	configparseerr(ads,fn,lno,"option `%.*s' malformed or has bad value",l,opt);
++	continue;
++      }
++      ads->udpretryms= v;
++      continue;
++    }
++    if (WORD_STARTS("tcpms:")) {
++      v= strtoul(word,&ep,10);
++      if (ep==word || ep != endword || v > INT_MAX) {
++	configparseerr(ads,fn,lno,"option `%.*s' malformed or has bad value",l,opt);
++	continue;
++      }
++      ads->tcpms= v;
++      continue;
++    }
++    /* End of parameters added for fastresolve. */
++
+     if (WORD_STARTS("adns_checkc:")) {
+       if (WORD_IS("none")) {
+ 	ads->iflags &= ~adns_if_checkc_freq;
+@@ -636,6 +667,11 @@ static int init_begin(adns_state *ads_r, adns_initflags flags,
+   adns__vbuf_init(&ads->tcprecv);
+   ads->tcprecv_skip= 0;
+   ads->nservers= ads->nsortlist= ads->nsearchlist= ads->tcpserver= 0;
++  /* Start of parameters added for fastresolve. */
++  ads->udpmaxretries = UDPMAXRETRIES;
++  ads->udpretryms = UDPRETRYMS;
++  ads->tcpms = TCPWAITMS;
++  /* End of parameters added for fastresolve. */
+   ads->searchndots= 1;
+   ads->tcpstate= server_disconnected;
+   timerclear(&ads->tcptimeout);
+diff --git a/src/transmit.c b/src/transmit.c
+index bf2f8c6..4e27d54 100644
+--- a/src/transmit.c
++++ b/src/transmit.c
+@@ -234,7 +234,7 @@ void adns__querysend_tcp(adns_query qu, struct timeval now) {
+ 
+ static void query_usetcp(adns_query qu, struct timeval now) {
+   qu->state= query_tcpw;
+-  adns__timeout_set(qu,now,TCPWAITMS);
++  adns__timeout_set(qu,now,qu->ads->tcpms);
+   LIST_LINK_TAIL(qu->ads->tcpw,qu);
+   adns__querysend_tcp(qu,now);
+   adns__tcp_tryconnect(qu->ads,now);
+@@ -259,12 +259,12 @@ void adns__query_send(adns_query qu, struct timeval now) {
+     return;
+   }
+ 
+-  if (qu->retries >= UDPMAXRETRIES) {
++  ads= qu->ads;
++  if (qu->retries >= ads->udpmaxretries) {
+     adns__query_fail(qu,adns_s_timeout);
+     return;
+   }
+ 
+-  ads= qu->ads;
+   serv= qu->udpnextserver;
+   addr= &ads->servers[serv];
+   udp= adns__udpsocket_by_af(ads, addr->addr.sa.sa_family);
+@@ -280,7 +280,7 @@ void adns__query_send(adns_query qu, struct timeval now) {
+   if (r<0 && errno != EAGAIN)
+     adns__warn(ads,serv,0,"sendto failed: %s",strerror(errno));
+   
+-  adns__timeout_set(qu, now, UDPRETRYMS);
++  adns__timeout_set(qu, now, ads->udpretryms);
+   qu->udpsent |= (1<<serv);
+   qu->udpnextserver= (serv+1)%ads->nservers;
+   qu->retries++;

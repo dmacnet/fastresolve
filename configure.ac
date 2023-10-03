@@ -1,10 +1,9 @@
-AC_INIT
-AM_INIT_AUTOMAKE([fastresolve], [2.10.1])
+AC_INIT([fastresolve],[2.11])
+AM_INIT_AUTOMAKE
 AC_ARG_PROGRAM
 AC_PATH_PROGS(PERL, [perl5 perl], [/usr/bin/perl])
 AC_PROG_CC
 AC_PROG_CXX
-AC_HEADER_STDC
 AC_CHECK_FUNCS(fgetln)
 
 # The following macro is
@@ -30,11 +29,10 @@ AC_DEFUN([DJM_LIB_DB_CXX],
 dnl Berkeley DB 2.x.
 AC_CACHE_CHECK([for Db::open in -ldb], djm_cv_lib_db_Dbopen,
 [AC_LANG_SAVE
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 djm_save_LIBS="$LIBS"
 LIBS="$LIBS -ldb"
-AC_TRY_LINK([#include <db_cxx.h>], [Db::open(NULL, DB_BTREE, DB_CREATE, 0, NULL, NULL, NULL);],
-	djm_cv_lib_db_Dbopen=yes, djm_cv_lib_db_Dbopen=no)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <db_cxx.h>]], [[Db::open(NULL, DB_BTREE, DB_CREATE, 0, NULL, NULL, NULL);]])],[djm_cv_lib_db_Dbopen=yes],[djm_cv_lib_db_Dbopen=no])
 LIBS="$djm_save_LIBS"
 AC_LANG_RESTORE])
 
@@ -54,12 +52,11 @@ dnl db-6.1.19: int Db::open(DbTxn *txnid, const char *file, const char *database
 dnl Berkeley DB 3.x-4.0 installed as libdb and libdb_cxx.
 AC_CACHE_CHECK([for Db::open 3.x-4.0 in -ldb_cxx], djm_cv_lib_db_cxx_Dbopen_34,
 [AC_LANG_SAVE
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 djm_save_LIBS="$LIBS"
 LIBS="$LIBS -ldb -ldb_cxx"
-AC_TRY_LINK([#include <db_cxx.h>], [Db *d = new Db(NULL, 0);
-d->open(NULL, NULL, DB_BTREE, DB_CREATE, 0);],
-	djm_cv_lib_db_cxx_Dbopen_34=yes, djm_cv_lib_db_cxx_Dbopen_34=no)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <db_cxx.h>]], [[Db *d = new Db(NULL, 0);
+d->open(NULL, NULL, DB_BTREE, DB_CREATE, 0);]])],[djm_cv_lib_db_cxx_Dbopen_34=yes],[djm_cv_lib_db_cxx_Dbopen_34=no])
 LIBS="$djm_save_LIBS"
 AC_LANG_RESTORE])
 
@@ -70,12 +67,11 @@ else
 dnl Berkeley DB 3.x installed as libdb3 (as on FreeBSD).
 AC_CACHE_CHECK([for Db::open in -ldb3_cxx], djm_cv_lib_db3_cxx_Dbopen,
 [AC_LANG_SAVE
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 djm_save_LIBS="$LIBS"
 LIBS="$LIBS -ldb3 -ldb3_cxx"
-AC_TRY_LINK([#include <db_cxx.h>], [Db *d = new Db(NULL, 0);
-d->open(NULL, NULL, DB_BTREE, DB_CREATE, 0);],
-	djm_cv_lib_db3_cxx_Dbopen=yes, djm_cv_lib_db3_cxx_Dbopen=no)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <db_cxx.h>]], [[Db *d = new Db(NULL, 0);
+d->open(NULL, NULL, DB_BTREE, DB_CREATE, 0);]])],[djm_cv_lib_db3_cxx_Dbopen=yes],[djm_cv_lib_db3_cxx_Dbopen=no])
 LIBS="$djm_save_LIBS"
 AC_LANG_RESTORE])
 
@@ -86,12 +82,11 @@ else
 dnl Berkeley DB 4.0 installed as libdb4 (as on FreeBSD).
 AC_CACHE_CHECK([for Db::open in -ldb4_cxx], djm_cv_lib_db4_cxx_Dbopen,
 [AC_LANG_SAVE
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 djm_save_LIBS="$LIBS"
 LIBS="$LIBS -ldb4 -ldb4_cxx"
-AC_TRY_LINK([#include <db_cxx.h>], [Db *d = new Db(NULL, 0);
-d->open(NULL, NULL, DB_BTREE, DB_CREATE, 0);],
-	djm_cv_lib_db4_cxx_Dbopen=yes, djm_cv_lib_db4_cxx_Dbopen=no)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <db_cxx.h>]], [[Db *d = new Db(NULL, 0);
+d->open(NULL, NULL, DB_BTREE, DB_CREATE, 0);]])],[djm_cv_lib_db4_cxx_Dbopen=yes],[djm_cv_lib_db4_cxx_Dbopen=no])
 LIBS="$djm_save_LIBS"
 AC_LANG_RESTORE])
 
@@ -102,12 +97,11 @@ else
 dnl Berkeley DB 4.1+ installed as libdb4 (as on FreeBSD).
 AC_CACHE_CHECK([for Db::open 4.1+ in -ldb4_cxx], djm_cv_lib_db41_cxx_Dbopen,
 [AC_LANG_SAVE
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 djm_save_LIBS="$LIBS"
 LIBS="$LIBS -ldb4 -ldb4_cxx"
-AC_TRY_LINK([#include <db_cxx.h>], [Db *d = new Db(NULL, 0);
-d->open(NULL, NULL, NULL, DB_BTREE, DB_CREATE, 0);],
-	djm_cv_lib_db41_cxx_Dbopen=yes, djm_cv_lib_db41_cxx_Dbopen=no)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <db_cxx.h>]], [[Db *d = new Db(NULL, 0);
+d->open(NULL, NULL, NULL, DB_BTREE, DB_CREATE, 0);]])],[djm_cv_lib_db41_cxx_Dbopen=yes],[djm_cv_lib_db41_cxx_Dbopen=no])
 LIBS="$djm_save_LIBS"
 AC_LANG_RESTORE])
 
@@ -118,12 +112,11 @@ else
 dnl Berkeley DB 4.1-6.x installed as libdb.
 AC_CACHE_CHECK([for Db::open 4.1-6.x in -ldb_cxx], djm_cv_lib_db_cxx_Dbopen_5,
 [AC_LANG_SAVE
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 djm_save_LIBS="$LIBS"
 LIBS="$LIBS -ldb -ldb_cxx"
-AC_TRY_LINK([#include <db_cxx.h>], [Db *d = new Db(NULL, 0);
-d->open(NULL, NULL, NULL, DB_BTREE, DB_CREATE, 0);],
-	djm_cv_lib_db_cxx_Dbopen_5=yes, djm_cv_lib_db_cxx_Dbopen_5=no)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <db_cxx.h>]], [[Db *d = new Db(NULL, 0);
+d->open(NULL, NULL, NULL, DB_BTREE, DB_CREATE, 0);]])],[djm_cv_lib_db_cxx_Dbopen_5=yes],[djm_cv_lib_db_cxx_Dbopen_5=no])
 LIBS="$djm_save_LIBS"
 AC_LANG_RESTORE])
 
@@ -134,12 +127,11 @@ else
 dnl Berkeley DB 5.x installed as libdb5.
 AC_CACHE_CHECK([for Db::open in -ldb5_cxx], djm_cv_lib_db5_cxx_Dbopen,
 [AC_LANG_SAVE
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 djm_save_LIBS="$LIBS"
 LIBS="$LIBS -ldb5 -ldb5_cxx"
-AC_TRY_LINK([#include <db_cxx.h>], [Db *d = new Db(NULL, 0);
-d->open(NULL, NULL, NULL, DB_BTREE, DB_CREATE, 0);],
-	djm_cv_lib_db5_cxx_Dbopen=yes, djm_cv_lib_db5_cxx_Dbopen=no)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <db_cxx.h>]], [[Db *d = new Db(NULL, 0);
+d->open(NULL, NULL, NULL, DB_BTREE, DB_CREATE, 0);]])],[djm_cv_lib_db5_cxx_Dbopen=yes],[djm_cv_lib_db5_cxx_Dbopen=no])
 LIBS="$djm_save_LIBS"
 AC_LANG_RESTORE])
 
@@ -150,12 +142,11 @@ else
 dnl Berkeley DB 6.x installed as libdb6.
 AC_CACHE_CHECK([for Db::open in -ldb6_cxx], djm_cv_lib_db6_cxx_Dbopen,
 [AC_LANG_SAVE
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 djm_save_LIBS="$LIBS"
 LIBS="$LIBS -ldb6 -ldb6_cxx"
-AC_TRY_LINK([#include <db_cxx.h>], [Db *d = new Db(NULL, 0);
-d->open(NULL, NULL, NULL, DB_BTREE, DB_CREATE, 0);],
-	djm_cv_lib_db6_cxx_Dbopen=yes, djm_cv_lib_db6_cxx_Dbopen=no)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <db_cxx.h>]], [[Db *d = new Db(NULL, 0);
+d->open(NULL, NULL, NULL, DB_BTREE, DB_CREATE, 0);]])],[djm_cv_lib_db6_cxx_Dbopen=yes],[djm_cv_lib_db6_cxx_Dbopen=no])
 LIBS="$djm_save_LIBS"
 AC_LANG_RESTORE])
 
@@ -176,6 +167,7 @@ fi])
 
 DJM_LIB_DB_CXX
 
-AC_OUTPUT(Makefile dns-terror/Makefile scripts/Makefile
+AC_CONFIG_FILES([Makefile dns-terror/Makefile scripts/Makefile
           scripts/btree-dump scripts/convert-ip-db scripts/expire-ip-db
-          scripts/rebuild-ip-db scripts/reresolve scripts/make-report)
+          scripts/rebuild-ip-db scripts/reresolve scripts/make-report])
+AC_OUTPUT

@@ -3,6 +3,8 @@ Changes in release 2.11:
 * Support Berkeley DB 5.x.
 * Fixed warnings from recent compilers.
 * Support for building .rpm and .deb packages.
+* Update Autoconf files.
+* Update patch for adns 1.6.
 
 Changes in release 2.10:
 

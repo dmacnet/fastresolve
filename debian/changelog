@@ -1,3 +1,9 @@
+fastresolve (2.11) unstable; urgency=medium
+
+  * Update build files.
+
+ -- David MacKenzie <dmac@dbmacnet.com>  Tue, 03 Oct 2023 13:29:23 -0400
+
 fastresolve (2.10.1) unstable; urgency=low
 
   * Initial Release for Debian.

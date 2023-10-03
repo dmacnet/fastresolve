@@ -1,26 +1,27 @@
 Summary:	A fast logfile IP address resolver and related utilities.
 Name:		fastresolve
-Version:	2.10.1
+Version:	2.11
 Release:	1
 #Copyright:	GPL
 License:	GPL
 Group:		Utilities
 Source:		fastresolve-%{version}.tar.gz
 URL:		https://github.com/dmacnet/fastresolve
-Vendor:		UUNET
+Vendor:		David MacKenzie
 Packager:	fastresolve-bugs@djmnet.org
 BuildRoot:	%{_tmppath}/%{name}-root
 # There doesn't appear to be a version-independent db-devel virtual
 # package, so we have to pick a particular version. Change the below
 # line if you want to build against a different version.
-BuildRequires:	adns-devel zlib-devel db4-devel
+BuildRequires:	adns-devel zlib-devel db5-devel
 Requires:	perl-BerkeleyDB
 
 # Use an installation of Berkeley DB with C++ support,
 # separate from glibc to avoid conflicts with it.
-# Both DB 2.x and 3.x work.
+# DB 2.x through 5.x should work.
 #define dbroot /usr/BerkeleyDB/2.7
-%define dbroot /usr/BerkeleyDB/3.1
+#define dbroot /usr/BerkeleyDB/3.1
+%define dbroot /usr/BerkeleyDB/5.4
 
 %description
 Fastresolve is a package of programs which process Web log files to
