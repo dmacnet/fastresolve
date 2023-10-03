@@ -65,6 +65,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/make-report.1*
 
 %changelog
+* Tue Oct  3 2023 David J. MacKenzie <dmac@dbmacnet.com> 2.11-1
+- New release.
+
 * Sat May 17 2003 David J. MacKenzie <djm@djmnet.org> 2.10-1
 - New release.
 
