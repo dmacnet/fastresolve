@@ -3,7 +3,6 @@ Tested on 10.6.8
 
 Install XCode Tools.
 Install (e.g., using Homebrew):
-brew install git
+# brew install git
 brew install adns (check if it's optimized)
-brew install berkeley-db (check if it has C++ support, also this is version 5 by default)
-
+brew install berkeley-db@5 (check if it has C++ support)
